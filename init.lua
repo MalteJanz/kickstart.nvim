@@ -701,6 +701,22 @@ require('lazy').setup({
             },
           },
         },
+
+        -- for zig-nightly (installed manually)
+        zls = {
+          cmd = { '/Users/m.janz/LocalTools/zig-nightly/zls' },
+          settings = {
+            zls = {
+              -- Whether to enable build-on-save diagnostics
+              --
+              -- Further information about build-on save:
+              -- https://zigtools.org/zls/guides/build-on-save/
+              -- enable_build_on_save = true,
+
+              zig_exe_path = '/Users/m.janz/LocalTools/zig-nightly/zig',
+            },
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed
