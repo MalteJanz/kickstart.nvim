@@ -206,7 +206,8 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
 -- [[ Custom Keymaps ]]
-vim.keymap.set('i', 'jj', '<Esc>')
+-- I used this before capslock to ESC remap in OS
+--vim.keymap.set('i', 'jj', '<Esc>')
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -714,6 +715,9 @@ require('lazy').setup({
             },
           },
         },
+
+        -- for odin language support
+        ols = {},
       }
 
       -- Ensure the servers and tools above are installed
