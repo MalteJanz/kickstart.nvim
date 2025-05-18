@@ -4,6 +4,8 @@ test.sh
 nvim
 
 .DS_Store
+.idea
+.vscode
 
 spell/
 #lazy-lock.json
