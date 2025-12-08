@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = true
+vim.g.have_nerd_font = false
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -172,6 +172,9 @@ vim.o.confirm = true
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- shortcut for :Ex (netrw) file explorer
+vim.keymap.set('n', '<leader>e', vim.cmd.Ex, { desc = 'Open file [e]xplorer (:Ex netrw)' })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -711,13 +714,22 @@ require('lazy').setup({
               --
               -- Further information about build-on save:
               -- https://zigtools.org/zls/guides/build-on-save/
-              -- enable_build_on_save = true,
+              --enable_build_on_save = true,
+              --
+              -- Neovim already provides basic syntax highlighting
+              semantic_tokens = 'partial',
+              -- Removing argument placeholders
+              enable_argument_placeholders = false,
             },
           },
         },
 
         -- for odin language support
-        ols = {},
+        ols = {
+          settings = {
+            odin_command = '/opt/homebrew/bin/odin',
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed
