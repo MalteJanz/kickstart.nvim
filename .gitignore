@@ -8,4 +8,4 @@ nvim
 .vscode
 
 spell/
-#lazy-lock.json
+lazy-lock.json
