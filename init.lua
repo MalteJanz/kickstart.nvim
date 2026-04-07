@@ -164,6 +164,24 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+-- Prevents showing extra messages when using completion
+vim.opt.shortmess:append 'c'
+-- Configures the behavior of the insert mode completion menu
+vim.opt.completeopt = 'menu,menuone,noselect,popup'
+
+-- Number of spaces that a <Tab> character represents
+vim.opt.tabstop = 4
+-- Number of spaces to use for each step of automatic indentation
+vim.opt.shiftwidth = 4
+-- Number of spaces that a <Tab> counts for during editing operations
+vim.opt.softtabstop = 4
+-- Converts tabs into spaces when typing
+vim.opt.expandtab = true
+-- Automatically inserts an extra level of indentation in some cases
+vim.opt.smartindent = true
+-- Makes <Tab> insert 'shiftwidth' number of spaces at the start of a line
+vim.opt.smarttab = true
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -767,6 +785,17 @@ require('lazy').setup({
           -- },
         },
         opts = {},
+        config = function()
+          -- add additional keybinds for jumping between snippet autocompletes
+          -- with control-h and control-l (in addition to the default tab and shift-tab)
+          local luasnip = require 'luasnip'
+          vim.keymap.set({ 'i', 's' }, '<C-l>', function()
+            if luasnip.jumpable(1) then luasnip.jump(1) end
+          end)
+          vim.keymap.set({ 'i', 's' }, '<C-h>', function()
+            if luasnip.jumpable(-1) then luasnip.jump(-1) end
+          end)
+        end,
       },
     },
     ---@module 'blink.cmp'
@@ -809,7 +838,7 @@ require('lazy').setup({
       completion = {
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        documentation = { auto_show = true, auto_show_delay_ms = 500 },
       },
 
       sources = {
@@ -829,6 +858,16 @@ require('lazy').setup({
 
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true },
+    },
+  },
+
+  {
+    -- plugin to automatically show function signature in insert mode
+    -- when inside brackets
+    'ray-x/lsp_signature.nvim',
+    event = 'InsertEnter',
+    opts = {
+      bind = true,
     },
   },
 
@@ -886,7 +925,21 @@ require('lazy').setup({
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
+      require('mini.surround').setup {
+        -- custom mappings to free up default s keybind in normal mode for substitute
+        -- surround now can be accessed with two letters like sa (surround add)
+        mappings = {
+          add = 'sa',
+          delete = 'sd',
+          find = 'sf',
+          find_left = 'sF',
+          highlight = 'sh',
+          replace = 'sr',
+          update_n_lines = 'sn',
+        },
+      }
+      -- restore original s vim keybind for substitute
+      vim.keymap.set('n', 's', 'cl')
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
