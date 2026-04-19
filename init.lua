@@ -208,6 +208,9 @@ vim.diagnostic.config {
 -- shortcut for :Ex (netrw) file explorer
 vim.keymap.set('n', '<leader>e', vim.cmd.Ex, { desc = 'Open file [e]xplorer (:Ex netrw)' })
 
+-- shortcut for saving all open buffers
+vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'Save all buffers' })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
