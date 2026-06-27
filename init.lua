@@ -882,19 +882,17 @@ do
   -- NOTE: You can also specify plugin using a version range for its git tag.
   --  See `:help vim.version.range()` for more info
   vim.pack.add { { src = gh 'L3MON4D3/LuaSnip', version = vim.version.range '2.*' } }
-  require('luasnip').setup {
-    config = function()
-      -- add additional keybinds for jumping between snippet autocompletes
-      -- with control-h and control-l (in addition to the default tab and shift-tab)
-      local luasnip = require 'luasnip'
-      vim.keymap.set({ 'i', 's' }, '<C-l>', function()
-        if luasnip.jumpable(1) then luasnip.jump(1) end
-      end)
-      vim.keymap.set({ 'i', 's' }, '<C-h>', function()
-        if luasnip.jumpable(-1) then luasnip.jump(-1) end
-      end)
-    end,
-  }
+  require('luasnip').setup {}
+
+  -- add additional keybinds for jumping between snippet autocompletes
+  -- with control-h and control-l (in addition to the default tab and shift-tab)
+  local luasnip = require 'luasnip'
+  vim.keymap.set({ 'i', 's' }, '<C-l>', function()
+    if luasnip.jumpable(1) then luasnip.jump(1) end
+  end)
+  vim.keymap.set({ 'i', 's' }, '<C-h>', function()
+    if luasnip.jumpable(-1) then luasnip.jump(-1) end
+  end)
 
   -- `friendly-snippets` contains a variety of premade snippets.
   --    See the README about individual language/framework/plugin snippets:
